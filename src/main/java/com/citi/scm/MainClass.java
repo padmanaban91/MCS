@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class MainClass {
 
 	public MainClass() { 
-		System.out.println("Class Initiating");
+		System.out.println("Class Initiating..");
 	}
 
 }
