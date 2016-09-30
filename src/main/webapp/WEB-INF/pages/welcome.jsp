@@ -8,6 +8,7 @@
 <title>Welcome S-Heaven</title>
 </head>
 <body>
-	<h1>${value}</h1>	
+	<h1>${value}</h1>
+	<a href="start" title="sakjsdkajsk">kjhkjhjhk</a>	
 </body>
 </html>

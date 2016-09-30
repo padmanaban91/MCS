@@ -8,7 +8,8 @@
 <title>Login</title>
 </head>
 <body>
-	<form method="POST">
+<h1>${failMessage}</h1>
+	<form method="post" action="login">
 		<table>
 			<tr>
 				<td>User Name:</td>
