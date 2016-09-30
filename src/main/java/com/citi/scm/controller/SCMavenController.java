@@ -1,5 +1,7 @@
 package com.citi.scm.controller;
 
+import org.codehaus.groovy.classgen.asm.MopWriter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -7,9 +9,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.citi.scm.Login;
+import com.citi.scm.service.SCMService;
 
 @Controller
 public class SCMavenController {
+	
+	@Autowired
+	SCMService scmService;
 
 	@RequestMapping(value = "/")
 	public String index() {
@@ -31,6 +37,17 @@ public class SCMavenController {
 			return "login";
 		}
 		
+	}
+	
+	@RequestMapping("/start")
+	public String startWorkflow(Model model) {
+		try {
+			scmService.startWorkflow();
+			model.addAttribute("value", "Workflow Executed");
+		} catch (Exception e) {
+			model.addAttribute("value", "Workflow Execution Failed");
+		}		
+		return "welcome";
 	}
 
 }
