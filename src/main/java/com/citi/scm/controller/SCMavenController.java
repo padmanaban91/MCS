@@ -1,6 +1,8 @@
 package com.citi.scm.controller;
 
-import org.codehaus.groovy.classgen.asm.MopWriter;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -24,10 +26,10 @@ public class SCMavenController {
 	}
 	
 	@RequestMapping(value = "/login" , method = RequestMethod.POST)
-	public String login(Model model, @ModelAttribute("login") Login login) {
-		if(login.getUsername() != null && !login.getUsername().isEmpty() &&
-				login.getPassword() != null && !login.getPassword().isEmpty()) {
-			System.out.println("=== " + login.getPassword());
+	public String login(Model model, @ModelAttribute("login1") Login login1) {
+		if(login1.getUsername() != null && !login1.getUsername().isEmpty() &&
+				login1.getPassword() != null && !login1.getPassword().isEmpty()) {
+			System.out.println("=== " + login1.getPassword());
 			model.addAttribute("value", "Login Done");
 			return "welcome";
 		} else {
@@ -40,12 +42,28 @@ public class SCMavenController {
 	}
 	
 	@RequestMapping("/start")
-	public String startWorkflow(Model model) {
+	public String startWorkflow(Login name, Model model) {
 		try {
-			scmService.startWorkflow();
+			Map<String, Object> inputMap = new HashMap<String, Object>();
+			inputMap.put("userName", name.getUsername());
+			scmService.startWorkflow(inputMap);
 			model.addAttribute("value", "Workflow Executed");
 		} catch (Exception e) {
 			model.addAttribute("value", "Workflow Execution Failed");
+		}		
+		return "complete";
+	}
+	
+	@RequestMapping("/complete")
+	public String completeWorkflow(Login name, Model model) {
+		try {			
+			Map<String, Object> inputMap = new HashMap<String, Object>();
+			inputMap.put("userName", name.getUsername());
+			scmService.completeWorkflow(inputMap);
+			model.addAttribute("value", "Workflow Completed");
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("value", "Workflow Completion Failed");
 		}		
 		return "welcome";
 	}
