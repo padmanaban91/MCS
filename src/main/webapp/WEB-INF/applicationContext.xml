@@ -1,15 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context
         				http://www.springframework.org/schema/context/spring-context.xsd
         				http://www.springframework.org/schema/mvc
         				http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-        				
-       <context:component-scan base-package="com.citi.scm"/>
-       <mvc:annotation-driven/>
+
+	<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<property name="locations" value="classpath*:*.properties">
+	</property>
+	</bean>
+	<context:component-scan base-package="com.citi.scm" />
+	<mvc:annotation-driven />
+	<bean id="mySql" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="${db.mysql.driver}" />
+		<property name="url" value="${db.mysql.url}" />
+		<property name="username" value="${db.mysql.username}" />
+		<property name="password" value="${db.mysql.password}" />
+	</bean>
+	
+	<bean class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="mySql" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
 </beans>

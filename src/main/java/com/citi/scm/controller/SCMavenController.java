@@ -61,11 +61,12 @@ public class SCMavenController {
 			inputMap.put("userName", name.getUsername());
 			scmService.completeWorkflow(inputMap);
 			model.addAttribute("value", "Workflow Completed");
+			return "welcome";
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("value", "Workflow Completion Failed");
+			return "complete";
 		}		
-		return "welcome";
 	}
 
 }
