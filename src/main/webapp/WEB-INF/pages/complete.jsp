@@ -13,7 +13,7 @@
 		<table>
 			<tr>
 				<td>Enter your name to complete workflow:</td>
-				<td><input name="username" type="text" /></td>
+				<td><input ng-model="a" name="username" type="text" /></td>
 			</tr>
 		</table>
 		<input type="submit" value="Click Me!!">
